@@ -2,6 +2,7 @@ before_install:
     - docker pull listx/texlive:2016-fonts
     - docker run --detach --volume `pwd`:/home/repo --name texlive2016 listx/texlive:2016-fonts
     - docker ps -a
+    - docker exec texlive2016 sh -c "pacman -S minted biber"
 services:
     - docker
 script:

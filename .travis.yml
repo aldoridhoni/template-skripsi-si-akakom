@@ -1,8 +1,9 @@
 before_install:
-    - "sudo apt-get update && sudo apt-get install --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra texlive-latex-recommended dvipng python-pygments xzdec"    
-    - "wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu && sudo ./install-tl-ubuntu"
+    - docker pull listx/texlive:2016-fonts
+    - docker run --detach --rm --volume .:/home/repo --name texlive2016 listx/texlive:2016-fonts
+    - docker ps -a
+services:
+    - docker
 script:
-    make pdf
-os: linux
-dist: trusty
-sudo: required
+    - docker exec texlive2016 sh -c "cd /home/repo && make pdf"
+language: latex

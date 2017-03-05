@@ -6,5 +6,5 @@ before_install:
 services:
     - docker
 script:
-    - docker exec texlive2016 sh -c "cd /home/repo && make pdf"
+    - docker exec texlive2016 sh -c "sh /etc/profile.d/perlbin.sh && cd /home/repo && make pdf"
 language: latex

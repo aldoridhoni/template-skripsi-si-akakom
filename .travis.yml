@@ -3,4 +3,4 @@ before_install:
 script:
     make pdf
 os: linux
-disro: xenial
+dist: xenial

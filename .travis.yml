@@ -1,7 +1,6 @@
 before_install:
     - "sudo apt-get update && sudo apt-get install --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra texlive-latex-recommended dvipng python-pygments xzdec"    
-    - "sudo tlmgr update --self"
-    - "sudo tlmgr install logreq"
+    - "wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu && sudo ./install-tl-ubuntu"
 script:
     make pdf
 os: linux

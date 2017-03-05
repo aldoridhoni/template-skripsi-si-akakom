@@ -1,0 +1,344 @@
+\documentclass[oneside, 12pt, a4paper]{book}
+\usepackage{amsmath}
+\usepackage{newtxtext}
+%\usepackage{mathptmx} % Times New Roman Font.
+\usepackage[bahasa]{babel}
+\usepackage{graphicx}
+\usepackage[a4paper,left=4cm,right=3cm,top=4cm,bottom=3cm,footskip=1.2cm,headsep=0.9cm,headheight=0.5cm]{geometry}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{setspace} % line-space-ing
+\usepackage{fancyhdr}
+\usepackage{lipsum}
+\usepackage{etoolbox}
+\usepackage{xpatch}
+\usepackage{logreq}
+\usepackage{csquotes}
+\usepackage[table]{xcolor}
+\usepackage{tabulary}
+\usepackage{tikz} % render tex image from dia
+\usepackage{wrapfig}  % inline image
+\usepackage{subcaption}
+\usepackage{indentfirst} % indent paragraph pertama
+\usepackage{lipsum} % lorem ipsum
+
+\setlength{\parindent}{2.5pc} % set indent
+%\setlength{\parskip}{0.8em} % spasi antar paragraph
+
+\definecolor{shade}{HTML}{C0C0C0}
+\definecolor{shadeRGB}{RGB}{192,192,192}
+\definecolor{linenum}{RGB}{233,233,233}
+
+% syntax highlight
+% section (charpter) for listing numbering
+\usepackage[section, final]{minted}
+\usemintedstyle{trac} %bw, colorful, igor, default, monokai, emacs, vim, tango, friendly
+
+\usepackage[
+backend=biber,
+style=apa,
+language=bahasa,
+citestyle=authoryear,
+sorting=nyt
+]{biblatex}
+\DeclareLanguageMapping{bahasa}{bahasa-apa}
+\addbibresource{../bib/skripsi.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Patching APA biblatex style
+%  
+\xpatchbibmacro{labelyear+extrayear}{%
+    \printtext[apadate]%
+}{%
+\setunit{\addperiod\space}%
+\printtext%
+}{}{}
+
+\xpatchbibmacro{type+institution}{%
+    \printtext[parens]%
+}{%
+\setunit{\addperiod\space}%
+\printtext%
+}{}{}
+
+\xpatchbibmacro{type+institution}{%
+       \setunit*{\addcomma\space}%
+       \printlist{institution}%
+       \setunit*{\addcomma\space}%
+}{%
+       \setunit*{\addperiod\space}%
+       \printlist{institution}%
+       \setunit*{\addperiod\space}%
+}{}{}
+
+\xpatchbibmacro{type+institution}{%
+    \printfield{type}%
+}{%
+\mkbibitalic{\printfield{type}}%
+}{}{}
+
+\DeclareFieldFormat*[thesis]{title}{#1}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Path asset
+% 
+\graphicspath{ {../assets/} }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Patching APA biblatex style
+% 
+\usepackage{titlesec, titletoc}% http://ctan.org/pkg/titletoc
+\titlecontents{chapter}% <section-type>
+	[0em]% <left>
+	{}% <above-code>
+	{\bfseries \chaptername\ \thecontentslabel.\quad}%<numbered-entry-format>
+	{}% <numberless-entry-format>
+	{\bfseries\titlerule*[1pc]{.}\contentspage}% <filler-page-format>
+
+\titlecontents{section}
+	[15mm]
+	{}
+	{\contentslabel{8mm}}
+	{\hspace*{-9mm}}
+	{\titlerule*[1pc]{.}\contentspage}
+	
+\titlecontents{subsection}
+	[27mm]
+	{}
+	{\contentslabel{12mm}}
+	{\hspace*{-12mm}}
+	{\titlerule*[1pc]{.}\contentspage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ubah ukuran font bab, subbab, dan subsubbab
+% 
+\titleformat{\chapter}[display]
+{\normalfont\large\bfseries\centering}{ BAB \thechapter}{0em}
+{}
+\titlespacing*{\chapter}{0pt}{-40pt}{3\baselineskip}
+
+\titleformat*{\section}{\normalsize\bfseries}
+\titleformat*{\subsection}{\normalsize\bfseries}
+\titleformat*{\subsubsection}{\normalsize\bfseries}
+\titleformat*{\paragraph}{\normalsize\bfseries}
+\titleformat*{\subparagraph}{\normalsize\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Penomerah Bab di Daftar Pustaka
+% 
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\bibname}{Daftar Pustaka}
+
+\addto\captionsbahasai{%
+	\renewcommand{\bibname}{Daftar Pustaka}
+}
+
+\fancypagestyle{center}{
+	\fancyhf{} % clear all header and footer fields
+	\fancyhead[l]{\bfseries \nouppercase \rightmark} % except the center
+	\fancyfoot[c]{\thepage}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}}
+
+\pagestyle{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Variabel
+% 
+\newcommand{\judulindo}{Judul Skripsi Dalam Bahasa Indonesia dengan Metode Penulisan Ilmiah}
+\newcommand{\judulinggris}{Title in English which is translated from Judul Bahasa Indonesia}
+
+\providecommand\phantomsection{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% http://tex.stackexchange.com/questions/11690/putting-latex-table-legend-in-a-x-y-style/11694#11694
+% 
+\usepackage{diagbox}
+\usepackage{makecell}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% rowstyle to change font color in table row
+% http://tex.stackexchange.com/questions/26360/how-to-color-the-font-of-a-single-row-in-a-table
+\usepackage{array}
+\makeatletter  % changes the catcode of @ to 11
+\newcommand*{\@rowstyle}{}
+
+\newcommand*{\rowstyle}[1]{% sets the style of the next row
+	\gdef\@rowstyle{#1}%
+	\@rowstyle\ignorespaces%
+}
+
+\newcolumntype{=}{% resets the row style
+	>{\gdef\@rowstyle{}}%
+}
+
+\newcolumntype{+}{% adds the current row style to the next column
+	>{\@rowstyle}%
+}
+\makeatother % changes the catcode of @ back to 12
+%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code listing
+% 
+\usepackage[most, minted, listingsutf8, breakable]{tcolorbox}
+\usepackage{inconsolata}
+
+\newtcblisting[auto counter,number within=section]{sexylisting}[2][]{
+	sharp corners, 
+	fonttitle=\bfseries,
+	colframe=shade,
+	colback=white,
+	text only,
+%	title={Listing \thetcbcounter: #2}
+	title={#2}
+}
+
+\newtcblisting[auto counter,number within=section]{mlstlisting}[2][]{
+	listing engine=minted,
+	minted style=default,
+	minted language=python, 
+	minted options={
+		fontsize=\footnotesize,
+		linenos,
+		numbersep=2.1mm,
+		mathescape,
+		baselinestretch=0.8,
+		python3=true,
+		tabsize=4,
+		autogobble=true,
+		breaklines=true,
+        breakanywhere=true,
+		breakbytoken=true,
+		breakautoindent=true,
+		resetmargins=true,
+		#1
+	},
+	sharp corners,
+	colback=white,
+	colframe=shade,
+	listing only,
+	left=7mm,
+	enhanced,
+	overlay={\begin{tcbclipinterior}\fill[linenum]
+			(frame.south west)
+			rectangle 
+			([xshift=7mm]frame.north west);
+			\end{tcbclipinterior}},
+%	breakable,
+%	title=Script \thetcbcounter: #2
+    title=#2
+}
+%
+
+\newtcbinputlisting[use counter from=mlstlisting]{\mlstinputlisting}[3][]{%
+	listing engine=minted,
+	minted language=python,
+	minted style=default,
+	minted options={
+		fontsize=\footnotesize,
+		linenos,
+		numbersep=2.1mm,
+		mathescape,
+		baselinestretch=0.8,
+		python3=true,
+		tabsize=4,
+		autogobble=true,
+		breaklines=true,
+        breakanywhere=true,
+		breakbytoken=true,
+		breakautoindent=true,
+		resetmargins=true,
+		#1
+	},
+	listing file={#3},
+    sharp corners, 
+	colback=white,
+	colframe=shade,
+	fonttitle=\bfseries,
+	listing only,
+	left=7mm,
+	enhanced,
+	overlay={\begin{tcbclipinterior}\fill[linenum] 
+			(frame.south west)
+			rectangle 
+			([xshift=7mm]frame.north west);
+			\end{tcbclipinterior}},
+	breakable,
+	title=#2
+}
+
+% Change line number color
+\renewcommand{\theFancyVerbLine}{\small\ttfamily%
+	\textcolor[rgb]{0.5,0.5,0.5}{\arabic{FancyVerbLine}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document
+% 
+\begin{document}
+	\include{./components/cover}
+	\frontmatter
+	\include{./components/judul}
+	\include{./components/pengesahan}
+	\include{./components/pernyataan}
+	\include{./components/persembahan}
+	\newpage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Daftar Isi}
+	\linespread{1.25}
+	\tableofcontents
+	\newpage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Daftar Gambar}
+	\listoffigures
+	
+	\newpage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Daftar Tabel}
+	\listoftables
+	
+	\newpage
+	\phantomsection
+	\renewcommand\listoflistingscaption{Daftar Listing}
+	\addcontentsline{toc}{chapter}{Daftar Listing}
+	\listoflistings
+    
+    \cleardoublepage
+    \fancyhead{} %Cleans the header
+    \include{./components/katapengantar}
+    \include{./components/abstrak}
+    \include{./components/abstract}
+    
+	%time waits for no one
+	\mainmatter
+	\doublespacing
+	\pagestyle{plain}
+	\include{./components/bab1}
+	\include{./components/bab2}
+	\include{./components/bab3}
+	\include{./components/bab4}
+	\include{./components/bab5}
+	
+	
+	\backmatter
+	\singlespacing
+	\clearpage \newpage
+
+	\phantomsection % Biar bisa muncul di Daftar Isi
+
+    
+    \printbibliography[
+    heading=bibintoc, % bibintoc adds the Bibliography to the table of contents
+    title={Daftar Pustaka} % If we want to override the default title "Bibliography" 
+    ]
+	\clearpage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Lampiran}
+	\appendix
+	\chapter*{Lampiran} 
+    
+\end{document}

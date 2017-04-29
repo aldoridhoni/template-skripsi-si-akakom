@@ -46,7 +46,7 @@ sorting=nyt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Patching APA biblatex style
-%  
+%
 \xpatchbibmacro{labelyear+extrayear}{%
     \printtext[apadate]%
 }{%
@@ -82,12 +82,12 @@ sorting=nyt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Path asset
-% 
+%
 \graphicspath{ {../assets/} }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Patching APA biblatex style
-% 
+% Ganti Format Teks Daftar Isi
+%
 \usepackage{titlesec, titletoc}% http://ctan.org/pkg/titletoc
 \titlecontents{chapter}% <section-type>
 	[0em]% <left>
@@ -102,7 +102,7 @@ sorting=nyt
 	{\contentslabel{8mm}}
 	{\hspace*{-9mm}}
 	{\titlerule*[1pc]{.}\contentspage}
-	
+
 \titlecontents{subsection}
 	[27mm]
 	{}
@@ -112,7 +112,7 @@ sorting=nyt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Ubah ukuran font bab, subbab, dan subsubbab
-% 
+%
 \titleformat{\chapter}[display]
 {\normalfont\large\bfseries\centering}{ BAB \thechapter}{0em}
 {}
@@ -126,7 +126,7 @@ sorting=nyt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Penomerah Bab di Daftar Pustaka
-% 
+%
 \renewcommand{\thechapter}{\arabic{chapter}}
 \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
 \renewcommand{\bibname}{Daftar Pustaka}
@@ -146,7 +146,7 @@ sorting=nyt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variabel
-% 
+%
 \newcommand{\judulindo}{Judul Skripsi Dalam Bahasa Indonesia dengan Metode Penulisan Ilmiah}
 \newcommand{\judulinggris}{Title in English which is translated from Judul Bahasa Indonesia}
 \newcommand{\nama}{NAMA SAYA}
@@ -156,7 +156,7 @@ sorting=nyt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % http://tex.stackexchange.com/questions/11690/putting-latex-table-legend-in-a-x-y-style/11694#11694
-% 
+%
 \usepackage{diagbox}
 \usepackage{makecell}
 
@@ -185,12 +185,12 @@ sorting=nyt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Code listing
-% 
+%
 \usepackage[most, minted, listingsutf8, breakable]{tcolorbox}
 \usepackage{inconsolata}
 
 \newtcblisting[auto counter,number within=section]{sexylisting}[2][]{
-	sharp corners, 
+	sharp corners,
 	fonttitle=\bfseries,
 	colframe=shade,
 	colback=white,
@@ -202,7 +202,7 @@ sorting=nyt
 \newtcblisting[auto counter,number within=section]{mlstlisting}[2][]{
 	listing engine=minted,
 	minted style=default,
-	minted language=python, 
+	minted language=python,
 	minted options={
 		fontsize=\footnotesize,
 		linenos,
@@ -227,7 +227,7 @@ sorting=nyt
 	enhanced,
 	overlay={\begin{tcbclipinterior}\fill[linenum]
 			(frame.south west)
-			rectangle 
+			rectangle
 			([xshift=7mm]frame.north west);
 			\end{tcbclipinterior}},
 %	breakable,
@@ -257,16 +257,16 @@ sorting=nyt
 		#1
 	},
 	listing file={#3},
-    sharp corners, 
+    sharp corners,
 	colback=white,
 	colframe=shade,
 	fonttitle=\bfseries,
 	listing only,
 	left=7mm,
 	enhanced,
-	overlay={\begin{tcbclipinterior}\fill[linenum] 
+	overlay={\begin{tcbclipinterior}\fill[linenum]
 			(frame.south west)
-			rectangle 
+			rectangle
 			([xshift=7mm]frame.north west);
 			\end{tcbclipinterior}},
 	breakable,
@@ -280,7 +280,7 @@ sorting=nyt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Document
-% 
+%
 \begin{document}
 	\include{./components/cover}
 	\frontmatter
@@ -297,24 +297,24 @@ sorting=nyt
 	\phantomsection
 	\addcontentsline{toc}{chapter}{Daftar Gambar}
 	\listoffigures
-	
+
 	\newpage
 	\phantomsection
 	\addcontentsline{toc}{chapter}{Daftar Tabel}
 	\listoftables
-	
+
 	\newpage
 	\phantomsection
 	\renewcommand\listoflistingscaption{Daftar Listing}
 	\addcontentsline{toc}{chapter}{Daftar Listing}
 	\listoflistings
-    
+
     \cleardoublepage
     \fancyhead{} %Cleans the header
     \include{./components/katapengantar}
     \include{./components/abstrak}
     \include{./components/abstract}
-    
+
 	%time waits for no one
 	\mainmatter
 	\doublespacing
@@ -324,23 +324,23 @@ sorting=nyt
 	\include{./components/bab3}
 	\include{./components/bab4}
 	\include{./components/bab5}
-	
-	
+
+
 	\backmatter
 	\singlespacing
 	\clearpage \newpage
 
 	\phantomsection % Biar bisa muncul di Daftar Isi
 
-    
+
     \printbibliography[
     heading=bibintoc, % bibintoc adds the Bibliography to the table of contents
-    title={Daftar Pustaka} % If we want to override the default title "Bibliography" 
+    title={Daftar Pustaka} % If we want to override the default title "Bibliography"
     ]
 	\clearpage
 	\phantomsection
 	\addcontentsline{toc}{chapter}{Lampiran}
 	\appendix
-	\chapter*{Lampiran} 
-    
+	\chapter*{Lampiran}
+
 \end{document}
